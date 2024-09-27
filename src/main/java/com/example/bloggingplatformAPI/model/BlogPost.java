@@ -1,4 +1,4 @@
-package com.example.bloggingplatformAPI.api.model;
+package com.example.bloggingplatformAPI.model;
 
 import jakarta.persistence.*;
 
@@ -8,16 +8,12 @@ import java.util.List;
 @Entity
 public class BlogPost {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
     private String category;
 
     @ElementCollection
@@ -25,6 +21,7 @@ public class BlogPost {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 
     @PrePersist
     protected void onCreate() {
