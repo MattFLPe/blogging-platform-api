@@ -1,37 +1,26 @@
 package com.example.bloggingplatformAPI.model;
 
-import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
-@Entity
 public class BlogPost {
-    @Id
     private Long id;
-
     private String title;
-
     private String content;
-
     private String category;
-
-    @ElementCollection
     private List<String> tags;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+    // Constructors
+    public BlogPost(Long id, String title, String content, String category, List<String> tags, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.tags = tags;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -74,19 +63,19 @@ public class BlogPost {
         this.tags = tags;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 }
