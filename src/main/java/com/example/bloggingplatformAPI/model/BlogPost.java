@@ -1,13 +1,19 @@
 package com.example.bloggingplatformAPI.model;
+import jakarta.persistence.*;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-
+@Entity
+@Table(name = "blog_posts")
 public class BlogPost {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private String category;
+    @ElementCollection
     private List<String> tags;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
