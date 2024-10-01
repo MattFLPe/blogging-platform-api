@@ -32,7 +32,7 @@ public class BlogPostController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BlogPost> updatePost(@PathVariable Long id, @RequestBody BlogPost updatedPost) {
         Optional<BlogPost> existingPost = blogService.updateBlogPost(id, updatedPost);
         if (existingPost.isPresent()) {
@@ -41,9 +41,15 @@ public class BlogPostController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-        //BlogPost blogPost = new BlogPost();
-       // BlogPost savedPost = blogPostRepository.save(blogPost);
 
-        //return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        boolean isDeleted = blogService.deleteBlogPost(id);
+        if(isDeleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     }
 
