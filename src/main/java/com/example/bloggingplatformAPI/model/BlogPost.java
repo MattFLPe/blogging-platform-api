@@ -18,7 +18,9 @@ public class BlogPost {
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 
-    // Constructors
+    public BlogPost() {
+    }
+
     public BlogPost(Long id, String title, String content, String category, List<String> tags, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
         this.id = id;
         this.title = title;
