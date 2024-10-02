@@ -21,9 +21,26 @@ public class BlogPostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BlogPost>> getAllPosts() {
-        List<BlogPost> posts = blogService.getAllPosts();
+    public ResponseEntity<List<BlogPost>> getPosts(@RequestParam(required = false) String term) {
+        List<BlogPost> posts;
+        if (term != null && !term.isEmpty()) {
+            System.out.println("Search term: " + term);
+            posts = blogService.searchBlogPosts(term);
+        } else {
+            posts = blogService.getAllPosts();
+        }
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BlogPost> getSinglePost(@PathVariable Long id) {
+        Optional<BlogPost> blogPost = blogService.getSinglePost(id);
+        if (blogPost.isPresent()) {
+            return new ResponseEntity<>(blogPost.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
