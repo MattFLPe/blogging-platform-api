@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
@@ -25,6 +25,38 @@ public class BlogService {
     public List<BlogPost> getAllPosts() {
         return blogPostRepository.findAll();
     }
+/*
+    public List<BlogPost> getFilteredPosts(String title, String category) {
+        List<BlogPost> allPosts = blogPostRepository.findAll();
+        if (title != null && !title.isEmpty()) {
+            allPosts = allPosts.stream()
+                    .filter(post -> post.getTitle().equalsIgnoreCase(title))
+                    .collect(Collectors.toList());
+        }
+
+        if (category != null && !category.isEmpty()) {
+            allPosts = allPosts.stream()
+                    .filter(post -> post.getCategory().equalsIgnoreCase(category))
+                    .collect(Collectors.toList());
+        }
+
+        return allPosts;
+    }
+ */
+
+    public List<BlogPost> searchBlogPosts(String term) {
+        if (term == null || term.isEmpty()) {
+            System.out.println("Returning all posts");
+            return blogPostRepository.findAll();
+        }
+        System.out.println("Searching for posts with term: " + term);
+        return blogPostRepository.searchByTerm(term);
+    }
+
+    public Optional<BlogPost> getSinglePost(Long id) {
+        return blogPostRepository.findById(id);
+    }
+
 
     public Optional<BlogPost> updateBlogPost(Long id, BlogPost updatedPost) {
         Optional<BlogPost> existingPost = blogPostRepository.findById(id);
@@ -38,9 +70,6 @@ public class BlogService {
                 return Optional.of(blogPostRepository.save(blogPost));
         }
         return Optional.empty();
-    }
-    public Optional<BlogPost> findBlogPostById(Long id) {
-        return blogPostRepository.findById(id);
     }
 
     public boolean deleteBlogPost(Long id) {
