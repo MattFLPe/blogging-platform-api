@@ -25,24 +25,6 @@ public class BlogService {
     public List<BlogPost> getAllPosts() {
         return blogPostRepository.findAll();
     }
-/*
-    public List<BlogPost> getFilteredPosts(String title, String category) {
-        List<BlogPost> allPosts = blogPostRepository.findAll();
-        if (title != null && !title.isEmpty()) {
-            allPosts = allPosts.stream()
-                    .filter(post -> post.getTitle().equalsIgnoreCase(title))
-                    .collect(Collectors.toList());
-        }
-
-        if (category != null && !category.isEmpty()) {
-            allPosts = allPosts.stream()
-                    .filter(post -> post.getCategory().equalsIgnoreCase(category))
-                    .collect(Collectors.toList());
-        }
-
-        return allPosts;
-    }
- */
 
     public List<BlogPost> searchBlogPosts(String term) {
         if (term == null || term.isEmpty()) {
@@ -56,7 +38,6 @@ public class BlogService {
     public Optional<BlogPost> getSinglePost(Long id) {
         return blogPostRepository.findById(id);
     }
-
 
     public Optional<BlogPost> updateBlogPost(Long id, BlogPost updatedPost) {
         Optional<BlogPost> existingPost = blogPostRepository.findById(id);
